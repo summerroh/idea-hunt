@@ -175,8 +175,7 @@ export async function POST(request: Request) {
         ) || headPhrases[0];
 
       const tailPhrase = title
-        .toLowerCase()
-        .replace(headPhrase.toLowerCase(), "")
+        .replace(headPhrase, "")
         .replace(/^[^a-zA-Z0-9]+/, "")
         .trim();
 

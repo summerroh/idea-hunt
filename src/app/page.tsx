@@ -343,9 +343,28 @@ export default function Home() {
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-3">
                         <h3 className="text-xl font-medium text-gray-100">
-                          <span className="text-gray-300">
-                            {idea.examples[0].tailPhrase}
-                          </span>
+                          {(() => {
+                            const regex = new RegExp(
+                              idea.examples[0].headPhrase,
+                              "gi"
+                            );
+                            const parts =
+                              idea.examples[0].tailPhrase.split(regex);
+                            return parts.map((part, i, arr) => (
+                              <span key={i}>
+                                {i > 0 && (
+                                  <span className="font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+                                    {
+                                      idea.examples[0].tailPhrase.match(
+                                        regex
+                                      )?.[i - 1]
+                                    }
+                                  </span>
+                                )}
+                                {part}
+                              </span>
+                            ));
+                          })()}
                         </h3>
                         <span className="bg-blue-500/20 text-blue-400 text-sm font-medium px-3 py-1 rounded-full border border-blue-500/30 whitespace-nowrap">
                           {idea.count} mentions
@@ -362,18 +381,7 @@ export default function Home() {
                           className="block bg-gray-700/50 p-4 rounded-xl border border-gray-600 hover:bg-gray-700 hover:border-gray-500 transition-all duration-200 cursor-pointer group"
                         >
                           <p className="text-gray-300 text-sm leading-relaxed">
-                            {example.snippet
-                              .split(example.headPhrase)
-                              .map((part, i, arr) => (
-                                <span key={i}>
-                                  {i > 0 && (
-                                    <span className="font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                                      {example.headPhrase}
-                                    </span>
-                                  )}
-                                  {part}
-                                </span>
-                              ))}
+                            {example.snippet}
                           </p>
                           <div className="mt-3 flex items-center text-xs text-gray-400">
                             <span className="bg-gray-600 px-2 py-1 rounded-full">

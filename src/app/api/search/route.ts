@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import axios from "axios";
 
 // Common head phrases for idea mining
 const COMMON_HEADS = [
@@ -20,16 +19,6 @@ const TIME_RANGE_MAP = {
   "6 months": "m6",
   "1 year": "y1",
 };
-
-interface SearchResult {
-  headPhrase: string;
-  tailPhrase: string;
-  snippet: string;
-  link: string;
-  source: string;
-  date: string;
-  relevance: number;
-}
 
 interface GoogleSearchItem {
   title?: string;
@@ -199,39 +188,6 @@ export async function POST(request: Request) {
       { error: error.message || "Internal server error" },
       { status: 500 }
     );
-  }
-}
-
-// Normalize head phrase to match common patterns
-function normalizeHeadPhrase(phrase: string): string {
-  const lowerPhrase = phrase.toLowerCase().trim();
-
-  // Check if the phrase starts with any common head
-  const matchingHead = COMMON_HEADS.find((head) =>
-    lowerPhrase.startsWith(head.toLowerCase())
-  );
-
-  return matchingHead || phrase;
-}
-
-// Extract the tail phrase after the head phrase
-function extractTailPhrase(snippet: string, headPhrase: string): string {
-  const lowerSnippet = snippet.toLowerCase();
-  const lowerHead = headPhrase.toLowerCase();
-  const tail = lowerSnippet.split(lowerHead)[1]?.trim() || "";
-  return tail.charAt(0).toUpperCase() + tail.slice(1);
-}
-
-// Try to extract date from the result
-function extractDate(item: GoogleSearchItem): Date {
-  try {
-    // Try to get date from metatags
-    const date =
-      item.pagemap?.metatags?.[0]?.["article:published_time"] ||
-      item.pagemap?.metatags?.[0]?.["og:updated_time"];
-    return date ? new Date(date) : new Date();
-  } catch {
-    return new Date();
   }
 }
 

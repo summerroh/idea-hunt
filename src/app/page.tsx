@@ -348,9 +348,9 @@ export default function Home() {
                             ));
                           })()}
                         </h3>
-                        <span className="bg-blue-500/20 text-blue-400 text-sm font-medium px-3 py-1 rounded-full border border-blue-500/30 whitespace-nowrap">
+                        {/* <span className="bg-blue-500/20 text-blue-400 text-sm font-medium px-3 py-1 rounded-full border border-blue-500/30 whitespace-nowrap">
                           {idea.count} mentions
-                        </span>
+                        </span> */}
                       </div>
                     </div>
                     <div className="space-y-4">

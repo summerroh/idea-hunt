@@ -31,13 +31,6 @@ interface SearchResult {
   relevance: number;
 }
 
-interface GroupedIdea {
-  headPhrase: string;
-  tailPhrase: string;
-  count: number;
-  examples: SearchResult[];
-}
-
 interface GoogleSearchItem {
   title?: string;
   snippet?: string;
@@ -209,76 +202,6 @@ export async function POST(request: Request) {
   }
 }
 
-// Utility function to fetch and process results from PSE
-async function fetchFromPSE(
-  headPhrase: string,
-  timeRange: string,
-  maxResults: number
-) {
-  const apiKey = process.env.GOOGLE_API_KEY;
-  const cx = process.env.SEARCH_ENGINE_ID;
-
-  // Debug logging
-  console.log("Environment variables:", {
-    hasApiKey: !!apiKey,
-    hasSearchEngineId: !!cx,
-    apiKeyLength: apiKey?.length,
-    searchEngineIdLength: cx?.length,
-  });
-
-  if (!apiKey || !cx) {
-    console.error("Missing credentials:", {
-      apiKey: apiKey ? "present" : "missing",
-      cx: cx ? "present" : "missing",
-    });
-    throw new Error(
-      "Missing API credentials. Please check your environment variables."
-    );
-  }
-
-  // Normalize the head phrase to match common patterns
-  const normalizedHead = normalizeHeadPhrase(headPhrase);
-  const query = encodeURIComponent(`"${normalizedHead}"`);
-  const dateRestrict = TIME_RANGE_MAP[timeRange as keyof typeof TIME_RANGE_MAP];
-  const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${query}&dateRestrict=${dateRestrict}&num=${maxResults}`;
-
-  try {
-    const res = await axios.get(url);
-
-    if (!res.data.items) {
-      console.warn(`No items found for query: ${normalizedHead}`);
-      return { results: [], totalResults: 0 };
-    }
-
-    // Process and analyze results
-    const processedResults = res.data.items.map((item: any) => {
-      const snippet = item.snippet;
-      const tail = extractTailPhrase(snippet, normalizedHead);
-
-      return {
-        headPhrase: normalizedHead,
-        tailPhrase: tail,
-        snippet,
-        link: item.link,
-        source: item.displayLink,
-        date: extractDate(item),
-        relevance: calculateRelevance(snippet, normalizedHead),
-      };
-    });
-
-    return {
-      results: processedResults,
-      totalResults: res.data.searchInformation?.totalResults || 0,
-    };
-  } catch (error: any) {
-    console.error(
-      `Error in fetchFromPSE for "${normalizedHead}":`,
-      error.message
-    );
-    throw error;
-  }
-}
-
 // Normalize head phrase to match common patterns
 function normalizeHeadPhrase(phrase: string): string {
   const lowerPhrase = phrase.toLowerCase().trim();
@@ -300,7 +223,7 @@ function extractTailPhrase(snippet: string, headPhrase: string): string {
 }
 
 // Try to extract date from the result
-function extractDate(item: any): Date {
+function extractDate(item: GoogleSearchItem): Date {
   try {
     // Try to get date from metatags
     const date =

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 
 // Common head phrases for idea mining
 const COMMON_HEADS = [
@@ -51,25 +50,6 @@ interface SearchResponse {
   commonHeads: string[];
 }
 
-// Function to extract date from snippet
-function extractDateFromSnippet(snippet: string): string {
-  // Common date patterns in snippets
-  const datePatterns = [
-    /(\d{1,2}\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{4})/i,
-    /(\d{1,2}\/\d{1,2}\/\d{4})/,
-    /(\d{4}-\d{2}-\d{2})/,
-    /(?:posted|published|updated)\s+on\s+(\d{1,2}\s+(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{4})/i,
-  ];
-
-  for (const pattern of datePatterns) {
-    const match = snippet.match(pattern);
-    if (match) {
-      return match[1];
-    }
-  }
-  return "";
-}
-
 export default function Home() {
   const [timeRange, setTimeRange] = useState("6 months");
   const [isLoading, setIsLoading] = useState(false);
@@ -115,8 +95,10 @@ export default function Home() {
 
       const data = await res.json();
       setSearchResults(data);
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unknown error occurred";
+      setError(errorMessage);
       console.error("Error fetching results:", error);
     } finally {
       setIsLoading(false);
@@ -350,7 +332,7 @@ export default function Home() {
                             );
                             const parts =
                               idea.examples[0].tailPhrase.split(regex);
-                            return parts.map((part, i, arr) => (
+                            return parts.map((part, i) => (
                               <span key={i}>
                                 {i > 0 && (
                                   <span className="font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">

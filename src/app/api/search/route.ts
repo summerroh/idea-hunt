@@ -36,6 +36,22 @@ interface GoogleSearchItem {
   };
 }
 
+interface ProcessedResult {
+  headPhrase: string;
+  tailPhrase: string;
+  snippet: string;
+  link: string;
+  source: string;
+  date: string;
+  relevance: number;
+}
+
+interface GroupedIdea {
+  tailPhrase: string;
+  count: number;
+  examples: ProcessedResult[];
+}
+
 export async function POST(request: Request) {
   try {
     // Validate environment variables
@@ -207,8 +223,8 @@ function calculateRelevance(snippet: string, headPhrase: string): number {
 }
 
 // Group similar tail phrases
-function groupSimilarTails(results: any[]): any[] {
-  const groups = new Map<string, any[]>();
+function groupSimilarTails(results: ProcessedResult[]): GroupedIdea[] {
+  const groups = new Map<string, ProcessedResult[]>();
 
   results.forEach((result) => {
     const tail = result.tailPhrase.toLowerCase();

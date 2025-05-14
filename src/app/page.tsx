@@ -58,7 +58,7 @@ export default function Home() {
   );
   const [error, setError] = useState<string | null>(null);
   const [selectedPatterns, setSelectedPatterns] = useState<string[]>(
-    COMMON_HEADS.slice(0, 3)
+    COMMON_HEADS.slice(0, 2)
   );
   const [selectedSites, setSelectedSites] = useState<string[]>(
     COMMON_SITES.map((site) => site.id)
@@ -160,7 +160,7 @@ export default function Home() {
                   <button
                     key={index}
                     onClick={() => togglePattern(pattern)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer ${
                       selectedPatterns.includes(pattern)
                         ? "bg-blue-500 text-white border border-blue-400"
                         : "bg-gray-700 text-gray-300 border border-gray-600 hover:bg-gray-600"
@@ -182,7 +182,7 @@ export default function Home() {
                   <button
                     key={site.id}
                     onClick={() => toggleSite(site.id)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 flex items-center gap-2 cursor-pointer ${
                       selectedSites.includes(site.id)
                         ? "bg-purple-500 text-white border border-purple-400"
                         : "bg-gray-700 text-gray-300 border border-gray-600 hover:bg-gray-600"
@@ -202,7 +202,7 @@ export default function Home() {
                 selectedPatterns.length === 0 ||
                 selectedSites.length === 0
               }
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-4 rounded-lg hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium"
+              className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-4 rounded-lg hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-medium cursor-pointer"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center">

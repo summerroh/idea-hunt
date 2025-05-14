@@ -124,9 +124,12 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
       <main className="container mx-auto px-4 py-8 max-w-6xl">
-        <h1 className="text-5xl font-bold text-center mb-12 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-          Idea Miner
+        <h1 className="text-5xl font-bold text-center mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          Find Saas Idea
         </h1>
+        <p className="text-xl text-center mb-12 text-gray-400">
+          Validated ideas, waiting to be built
+        </p>
 
         <div className="bg-gray-800 rounded-xl shadow-2xl p-8 mb-8 border border-gray-700">
           <div className="space-y-6">
@@ -139,7 +142,7 @@ export default function Home() {
               </label>
               <select
                 id="timeRange"
-                className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-100"
+                className="w-full p-3 bg-gray-700 border border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-100 cursor-pointer"
                 value={timeRange}
                 onChange={(e) => setTimeRange(e.target.value)}
               >
@@ -226,10 +229,10 @@ export default function Home() {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  Mining Ideas...
+                  Finding SaaS Ideas...
                 </span>
               ) : (
-                "Start Mining Ideas"
+                "Find Your Next SaaS Idea"
               )}
             </button>
           </div>

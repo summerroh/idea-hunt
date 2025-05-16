@@ -2,14 +2,18 @@ import { NextResponse } from "next/server";
 
 // Common head phrases for idea mining
 const COMMON_HEADS = [
-  "is there a tool for",
   "how can I automate",
+  "is there a way to",
+  "is there a tool for",
   "what's the best way to",
   "looking for a solution to",
   "need help with",
   "tired of",
   "wish there was a",
   "is there an app that",
+  "is there a service that",
+  "is there a platform that",
+  "is there a solution to",
 ];
 
 // Time range to Google's dateRestrict parameter mapping

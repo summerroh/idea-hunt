@@ -109,7 +109,11 @@ export async function POST(request: Request) {
 
       console.log("Search URL:", searchUrl.toString()); // Debug log
 
-      const response = await fetch(searchUrl.toString());
+      const response = await fetch(searchUrl.toString(), {
+        headers: {
+          Referer: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+        },
+      });
       if (!response.ok) {
         const error = await response.json();
         console.error("Google API Error:", {

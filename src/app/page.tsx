@@ -400,6 +400,21 @@ export default function Home() {
           </div>
         )}
       </main>
+      <footer className="container mx-auto px-4 py-8 text-center text-gray-400">
+        <p className="text-sm">
+          Have feedback or want to chat?
+          <br />
+          Find me on{" "}
+          <a
+            href="https://twitter.com/codinginsummer"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-400 hover:text-blue-300 transition-colors duration-200"
+          >
+            @codinginsummer
+          </a>
+        </p>
+      </footer>
     </div>
   );
 }

@@ -124,7 +124,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100">
       <main className="container mx-auto px-4 py-8 max-w-6xl">
-        <h1 className="text-5xl font-bold text-center mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+        <h1 className="text-4xl sm:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
           Find Saas Idea
         </h1>
         <p className="text-xl text-center mb-12 text-gray-400">
